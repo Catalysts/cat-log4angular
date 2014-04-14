@@ -1,10 +1,6 @@
 <div class="header">
     <ul class="nav nav-pills pull-right">
         <li class="active"><a ng-href="#">Home</a></li>
-        <li><a ng-href="#/info">Info</a></li>
-        <li><a ng-href="#/warn">Warn</a></li>
-        <li><a ng-href="#/error">Error</a></li>
-        <li><a ng-href="#/log">Log</a></li>
     </ul>
     <h3 class="text-muted">ng log</h3>
 </div>
@@ -13,7 +9,16 @@
     <h1>Customizable Logger</h1>
 
     <p class="lead">
-        See source.
+
+        Root logger level: <select ng-model="rootLoggerLevel" ng-options="l for l in levels"></select><br>
+        Sub logger level: <select ng-model="subLoggerLevel" ng-options="l for l in levels"></select><br>
+        <button ng-click="debug('Breakpoint')">Debug</button>
+        <button ng-click="info('Info')">Info</button>
+        <button ng-click="warn('Attention')">Warn</button>
+        <button ng-click="error('Exception')">Error</button>
     </p>
 
 </div>
+<ul>
+    <li ng-repeat="log in logs">{{log.level}} - {{log.message}}</li>
+</ul>

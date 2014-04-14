@@ -8,43 +8,17 @@ angular
         'ngRoute',
         'ngLogCustom'
     ])
+    .config(function ($customizableLoggerProvider, CONSOLE_APPENDER, ROOT_LOGGER_NAME) {
+        $customizableLoggerProvider
+            .configure(ROOT_LOGGER_NAME, 'warn')
+            .configure('PAC', 'info')
+            .appender(CONSOLE_APPENDER);
+    })
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
-            }).when('/info', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    info: ['$log', function ($log) {
-                        $log.info('info')
-                    }]
-                }
-            }).when('/warn', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    warn: ['$log', function ($log) {
-                        $log.warn('warn')
-                    }]
-                }
-            }).when('/error', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    error: ['$log', function ($log) {
-                        $log.error('error')
-                    }]
-                }
-            }).when('/log', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    error: ['$log', function ($log) {
-                        $log.log('log')
-                    }]
-                }
             })
             .otherwise({
                 redirectTo: '/'
