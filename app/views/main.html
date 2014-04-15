@@ -12,13 +12,15 @@
 
         Root logger level: <select ng-model="rootLoggerLevel" ng-options="l for l in levels"></select><br>
         Sub logger level: <select ng-model="subLoggerLevel" ng-options="l for l in levels"></select><br>
-        <button ng-click="debug('Breakpoint')">Debug</button>
-        <button ng-click="info('Info')">Info</button>
-        <button ng-click="warn('Attention')">Warn</button>
-        <button ng-click="error('Exception')">Error</button>
+        <button class="btn btn-success" ng-click="debug('Breakpoint')">Debug</button>
+        <button class="btn btn-info" ng-click="info('Info')">Info</button>
+        <button class="btn btn-warning" ng-click="warn('Attention')">Warn</button>
+        <button class="btn btn-danger" ng-click="error('Exception')">Error</button>
+        <br/>
+        <button class="btn btn-default" ng-click="clearLogs()">Clear logs</button>
     </p>
 
 </div>
 <ul>
-    <li ng-repeat="log in logs">{{log.level}} - {{log.message}}</li>
+    <li ng-repeat="log in logs">{{log.timestamp | date:'mediumTime'}}: {{log.level}} - [{{log.group}}] {{log.message}}</li>
 </ul>

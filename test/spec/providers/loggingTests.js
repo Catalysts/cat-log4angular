@@ -7,7 +7,7 @@ describe('Provider: $customizableLogger', function () {
     var DEFAULT_LEVEL;
     var dummyAppender = {
         logs: [],
-        report: function (level, message) {
+        report: function (level, group, message) {
             this.logs.push(message);
         },
         reset: function () {
@@ -24,8 +24,11 @@ describe('Provider: $customizableLogger', function () {
                     $customizableLoggerProvider = _$customizableLoggerProvider_;
                     ROOT_LOGGER_NAME = _ROOT_LOGGER_NAME_;
                     DEFAULT_LEVEL = _DEFAULT_LEVEL_;
-                    $customizableLoggerProvider.appender(_CONSOLE_APPENDER_);
-                    $customizableLoggerProvider.appender(dummyAppender);
+                    $customizableLoggerProvider
+                        .appender(_CONSOLE_APPENDER_)
+                        .appender(dummyAppender)
+                        .enableMemorySizes()
+                        .disableMemorySizes();
                 }]);
 
         // Initialize injector
@@ -157,7 +160,7 @@ describe('Provider: $customizableLogger', function () {
         });
 
         expect(dummyAppender.logs.length).toBe(2);
-        // expecting this function to be executed in no time
-        expect(dummyAppender.logs[1]).toMatch(/0 ms/i);
+        // expecting this function to be executed with timing information supplied
+        expect(dummyAppender.logs[1]).toMatch(/\d+ ms/i);
     });
 });

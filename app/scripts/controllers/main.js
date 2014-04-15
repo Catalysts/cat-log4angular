@@ -4,8 +4,8 @@ angular.module('ngLogApp')
     .run(function ($customizableLogger, $rootScope) {
         $customizableLogger
             .appender({
-                report : function(level, message) {
-                    $rootScope.$broadcast('log', {level: level, message: message});
+                report : function(level, group, message) {
+                    $rootScope.$broadcast('log', {level: level, group: group, message: message, timestamp: new Date()});
                 }
             });
     })
@@ -37,5 +37,8 @@ angular.module('ngLogApp')
         };
         $scope.error = function(message) {
             $subLogger.error(message);
+        };
+        $scope.clearLogs = function() {
+            $scope.logs.length = 0;
         };
     });

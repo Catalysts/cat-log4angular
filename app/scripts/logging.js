@@ -11,22 +11,23 @@
  *
  * Appender interface:
  * {
- *  report(level, message [, memorySizes]) : function called by the logger, if the configured log level is met
+ *  report(level, group, message [, memorySizes]) : function called by the logger, if the configured log level is met
  * }
  */
 angular
     .module('ngLogCustom', [])
     .constant('ROOT_LOGGER_NAME', 'ROOT')
     .constant('DEFAULT_LEVEL', 'info')
+    .constant('LOG_LEVEL_ORDER', {'debug': 1, 'info': 2, 'warn': 3, 'error': 4})
     .constant('CONSOLE_APPENDER', {
-        report: function (level, message) {
+        report: function (level, group, message) {
             if (typeof console === 'object') {
-                console[level](message);
+                console[level](group + ' ' + message);
             }
         }
     })
-    .provider('$customizableLogger', ['ROOT_LOGGER_NAME', 'DEFAULT_LEVEL',
-        function (ROOT_LOGGER_NAME, DEFAULT_LEVEL) {
+    .provider('$customizableLogger', ['ROOT_LOGGER_NAME', 'DEFAULT_LEVEL', 'LOG_LEVEL_ORDER',
+        function (ROOT_LOGGER_NAME, DEFAULT_LEVEL, LOG_LEVEL_ORDER) {
             // available levels: log, debug, info, warn, error
             var providerSelf = this;
             var config = {};
@@ -84,17 +85,16 @@ angular
                     }
                 };
                 var loggify = function (logger) {
-                    var levelOrder = {'debug': 1, 'info': 2, 'warn': 3, 'error': 4};
                     _.each(['debug', 'info', 'warn', 'error'], function (level) {
-                        var methodLvlNumber = levelOrder[level];
+                        var methodLvlNumber = LOG_LEVEL_ORDER[level];
                         var log = function (message) {
-                            if (levelOrder[logger.resolveLevel()] <= methodLvlNumber) {
+                            if (LOG_LEVEL_ORDER[logger.resolveLevel()] <= methodLvlNumber) {
                                 _.each(appenderList, function (appender) {
                                     var memorySizes;
                                     if (dumpMemorySizes && window.performance && window.performance.memory) {
                                         memorySizes = window.performance.memory;
                                     }
-                                    appender.report(level, message, memorySizes);
+                                    appender.report(level, logger.group, message, memorySizes);
                                 });
                             }
                         };
@@ -152,4 +152,5 @@ angular
 
             return $delegate;
         }]);
-    });
+    })
+;
