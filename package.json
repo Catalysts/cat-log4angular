@@ -1,41 +1,28 @@
 {
-  "name": "nglog",
+  "name": "cat-log4angular",
   "version": "0.0.0",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-autoprefixer": "~0.4.0",
-    "grunt-bower-install": "~1.0.0",
-    "grunt-concurrent": "~0.5.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-htmlmin": "~0.1.3",
-    "grunt-contrib-imagemin": "~0.3.0",
-    "grunt-contrib-jshint": "~0.7.1",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.2",
-    "grunt-google-cdn": "~0.2.0",
-    "grunt-newer": "~0.6.1",
-    "grunt-ngmin": "~0.0.2",
-    "grunt-rev": "~0.1.0",
-    "grunt-svgmin": "~0.2.0",
-    "grunt-usemin": "~2.0.0",
-    "jshint-stylish": "~0.1.3",
-    "load-grunt-tasks": "~0.4.0",
-    "time-grunt": "~0.2.1",
-    "karma-ng-scenario": "~0.1.0",
-    "grunt-karma": "~0.8.2",
-    "karma": "~0.12.6",
-    "karma-ng-html2js-preprocessor": "~0.1.0",
-    "karma-jasmine": "~0.1.5",
-    "karma-chrome-launcher": "~0.1.3"
+    "bower": "=1.3.12",
+    "gulp": "=3.8.10",
+    "gulp-bower": "=0.0.7",
+    "gulp-concat": "=2.4.2",
+    "gulp-jshint": "=1.9.0",
+    "gulp-uglify": "=1.0.1",
+    "gulp-rename": "=1.2.0",
+    "gulp-sourcemaps": "=1.2.8",
+    "phantomjs": "=1.9.12",
+    "lodash": "=2.4.1",
+    "karma": "=0.12.28",
+    "karma-jasmine": "=0.3.2",
+    "karma-phantomjs-launcher": "=0.1.4",
+    "karma-coverage": "=0.2.7",
+    "jshint-stylish": "=1.0.0",
+    "glob": "=4.2.2"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp test"
   }
 }
