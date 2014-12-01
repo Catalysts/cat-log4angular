@@ -1,6 +1,6 @@
 {
   "name": "cat-log4angular",
-  "version": "0.0.0",
+  "version": "14.12.1",
   "devDependencies": {
     "bower": "=1.3.12",
     "gulp": "=3.8.10",

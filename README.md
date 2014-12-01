@@ -11,7 +11,7 @@ Two implementations of such appenders are included within cat-log4angular:
 __Note:__ By default no appender is registered, this means that calling any log method will result in a NOOP by default.
 
 ## Usage
-First you need to get the necessary js file, the easiest way to do so is by using bower and just installing 'cat-log4angular'.
+First you need to get the necessary js file, the easiest way to do so is by using bower and just installing 'cat-log4angular'. ([bower-repo](https://github.com/Catalysts/cat-log4angular-bower/tree/v14.12.1))
 Afterwards just add the the js file to your html page and make your angular app/module depend on ```cat.service.log```.
 Next you have to setup all appenders you want to use.
 After that you are good to go. Just call $log.Logger('someLoggerName') to retrieve a named logger instance, and log via the appropriate functions.
