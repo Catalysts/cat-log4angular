@@ -139,14 +139,14 @@ angular
             };
         }])
     .config(function ($provide) {
-        $provide.decorator('$log', ['$delegate', 'catLogService', 'ROOT_LOGGER_NAME', function ($delegate, $customizableLogger, ROOT_LOGGER_NAME) {
+        $provide.decorator('$log', ['$delegate', 'catLogService', 'ROOT_LOGGER_NAME', function ($delegate, catLogService, ROOT_LOGGER_NAME) {
             // instantiate  root logger
-            var rootLogger = $customizableLogger.Logger();
+            var rootLogger = catLogService.Logger();
 
             _.each(['debug', 'info', 'warn', 'error'], function (level) {
                 $delegate[level] = rootLogger[level];
             });
-            $delegate.Logger = $customizableLogger.Logger;
+            $delegate.Logger = catLogService.Logger;
             $delegate.setLevel = rootLogger.setLevel;
             $delegate.group = ROOT_LOGGER_NAME;
 
