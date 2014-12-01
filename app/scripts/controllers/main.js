@@ -13,14 +13,16 @@ angular.module('ngLogApp')
         var $rootLogger = $log;
         var $subLogger = $log.Logger('sub');
         $scope.levels = [undefined, 'debug', 'info', 'warn', 'error'];
-        $scope.rootLoggerLevel = 'warn';
-        $scope.subLoggerLevel = undefined;
+        $scope.loggerLevels = {
+            root: 'warn',
+            sub: undefined
+        };
         $scope.logs = [];
 
-        $scope.$watch('subLoggerLevel', function(newVal) {
+        $scope.$watch('loggerLevels.sub', function(newVal) {
             $subLogger.setLevel(newVal);
         });
-        $scope.$watch('rootLoggerLevel', function(newVal) {
+        $scope.$watch('loggerLevels.root', function(newVal) {
             $rootLogger.setLevel(newVal);
         });
         $scope.$on('log', function(event, logObj) {

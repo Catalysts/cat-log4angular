@@ -1,19 +1,12 @@
 {
-    "name": "ng-log",
+    "name": "cat-log4angular",
     "version": "0.0.0",
     "dependencies": {
-        "bootstrap": "~3.0.3",
-        "angular": "1.2.15",
-        "json3": "~3.2.6",
-        "es5-shim": "~2.1.0",
-        "angular-resource": "1.2.15",
-        "angular-cookies": "1.2.15",
-        "angular-sanitize": "1.2.15",
-        "angular-route": "1.2.15",
+        "angular": "1.2.26",
         "lodash": "2.4.1"
     },
     "devDependencies": {
-        "angular-mocks": "1.2.15",
-        "angular-scenario": "1.2.15"
+        "angular-mocks": "1.2.26",
+        "angular-scenario": "1.2.26"
     }
 }
