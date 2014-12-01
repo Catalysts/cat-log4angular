@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('ngLogApp')
-    .run(function ($customizableLogger, $rootScope) {
-        $customizableLogger
+    .run(function (catLogService, $rootScope) {
+        catLogService
             .appender({
                 report : function(level, group, message) {
                     $rootScope.$broadcast('log', {level: level, group: group, message: message, timestamp: new Date()});

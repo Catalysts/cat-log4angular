@@ -15,7 +15,7 @@
  * }
  */
 angular
-    .module('ngLogCustom', [])
+    .module('cat.service.log', [])
     .constant('ROOT_LOGGER_NAME', 'ROOT')
     .constant('DEFAULT_LEVEL', 'info')
     .constant('LOG_LEVEL_ORDER', {'debug': 1, 'info': 2, 'warn': 3, 'error': 4})
@@ -26,7 +26,7 @@ angular
             }
         }
     })
-    .provider('$customizableLogger', ['ROOT_LOGGER_NAME', 'DEFAULT_LEVEL', 'LOG_LEVEL_ORDER',
+    .provider('catLogService', ['ROOT_LOGGER_NAME', 'DEFAULT_LEVEL', 'LOG_LEVEL_ORDER',
         function (ROOT_LOGGER_NAME, DEFAULT_LEVEL, LOG_LEVEL_ORDER) {
             // available levels: log, debug, info, warn, error
             var providerSelf = this;
@@ -139,7 +139,7 @@ angular
             };
         }])
     .config(function ($provide) {
-        $provide.decorator('$log', ['$delegate', '$customizableLogger', 'ROOT_LOGGER_NAME', function ($delegate, $customizableLogger, ROOT_LOGGER_NAME) {
+        $provide.decorator('$log', ['$delegate', 'catLogService', 'ROOT_LOGGER_NAME', function ($delegate, $customizableLogger, ROOT_LOGGER_NAME) {
             // instantiate  root logger
             var rootLogger = $customizableLogger.Logger();
 

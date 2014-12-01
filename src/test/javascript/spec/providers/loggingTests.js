@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Provider: $customizableLogger', function () {
+describe('Provider: catLogService', function () {
 
-    var $customizableLoggerProvider;
+    var catLogServiceProvider;
     var ROOT_LOGGER_NAME;
     var DEFAULT_LEVEL;
     var dummyAppender = {
@@ -17,14 +17,14 @@ describe('Provider: $customizableLogger', function () {
     var $log;
 
     beforeEach(function () {
-        // Initialize the $customizableLoggerProvider by injecting it to a dummy module's config
-        angular.module('test.app.config', ['ngLogCustom'])
-            .config(['$customizableLoggerProvider', 'ROOT_LOGGER_NAME', 'DEFAULT_LEVEL', 'CONSOLE_APPENDER',
-                function (_$customizableLoggerProvider_, _ROOT_LOGGER_NAME_, _DEFAULT_LEVEL_, _CONSOLE_APPENDER_) {
-                    $customizableLoggerProvider = _$customizableLoggerProvider_;
+        // Initialize the catLogServiceProvider by injecting it to a dummy module's config
+        angular.module('test.app.config', ['cat.service.log'])
+            .config(['catLogServiceProvider', 'ROOT_LOGGER_NAME', 'DEFAULT_LEVEL', 'CONSOLE_APPENDER',
+                function (_catLogServiceProvider_, _ROOT_LOGGER_NAME_, _DEFAULT_LEVEL_, _CONSOLE_APPENDER_) {
+                    catLogServiceProvider = _catLogServiceProvider_;
                     ROOT_LOGGER_NAME = _ROOT_LOGGER_NAME_;
                     DEFAULT_LEVEL = _DEFAULT_LEVEL_;
-                    $customizableLoggerProvider
+                    catLogServiceProvider
                         .appender(_CONSOLE_APPENDER_)
                         .appender(dummyAppender)
                         .enableMemorySizes()
@@ -43,12 +43,12 @@ describe('Provider: $customizableLogger', function () {
     });
 
     it('has a provider', function () {
-        expect($customizableLoggerProvider).toBeDefined();
+        expect(catLogServiceProvider).toBeDefined();
     });
 
     it('throws error when undefining log level of ROOT logger', function () {
         expect(function () {
-            $customizableLoggerProvider.configure(ROOT_LOGGER_NAME, undefined);
+            catLogServiceProvider.configure(ROOT_LOGGER_NAME, undefined);
         })
             .toThrow(new Error('Cannot undefine the log level of the root logger.'));
     });
@@ -76,17 +76,17 @@ describe('Provider: $customizableLogger', function () {
     });
 
     it('returns a custom logger with a specific log level different from overridden root logger level', function () {
-        $customizableLoggerProvider.configure(ROOT_LOGGER_NAME, 'error');
-        $customizableLoggerProvider.configure('PAC', 'debug');
-        var $log = $customizableLoggerProvider.$get();
+        catLogServiceProvider.configure(ROOT_LOGGER_NAME, 'error');
+        catLogServiceProvider.configure('PAC', 'debug');
+        var $log = catLogServiceProvider.$get();
         var logger = $log.Logger('PAC');
         expect(logger.parent.resolveLevel()).toBe('error');
         expect(logger.resolveLevel()).toBe('debug');
     });
 
     it('updates the loggers log level at runtime', function () {
-        $customizableLoggerProvider.configure('PAC', 'debug');
-        var $log = $customizableLoggerProvider.$get();
+        catLogServiceProvider.configure('PAC', 'debug');
+        var $log = catLogServiceProvider.$get();
         var logger = $log.Logger('PAC');
         expect(logger.resolveLevel()).toBe('debug');
         logger.setLevel('warn');
@@ -94,8 +94,8 @@ describe('Provider: $customizableLogger', function () {
     });
 
     it('resets the loggers log level at runtime to the inherited level', function () {
-        $customizableLoggerProvider.configure('PAC', 'debug');
-        var $log = $customizableLoggerProvider.$get();
+        catLogServiceProvider.configure('PAC', 'debug');
+        var $log = catLogServiceProvider.$get();
         var logger = $log.Logger('PAC');
         expect(logger.resolveLevel()).toBe('debug');
         logger.setLevel(undefined);

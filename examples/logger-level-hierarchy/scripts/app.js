@@ -2,20 +2,20 @@
 
 angular
     .module('ngLogApp', [
-        'ngLogCustom'
+        'cat.service.log'
     ])
-    .config(function ($customizableLoggerProvider, CONSOLE_APPENDER, ROOT_LOGGER_NAME) {
-        $customizableLoggerProvider
+    .config(function (catLogServiceProvider, CONSOLE_APPENDER, ROOT_LOGGER_NAME) {
+        catLogServiceProvider
             .configure(ROOT_LOGGER_NAME, 'warn')
             .configure('PAC', 'info')
             .configure('httpLogAppender', 'debug')
             .appender(CONSOLE_APPENDER);
     })
-    .config(function ($httpLogAppenderProvider) {
-        $httpLogAppenderProvider
+    .config(function (catHttpLogAppenderProvider) {
+        catHttpLogAppenderProvider
             .postUrl('/logs/upload')
             .interval(3);
     })
-    .run(function ($customizableLogger, $httpLogAppender) {
-        $customizableLogger.appender($httpLogAppender);
+    .run(function (catLogService, catHttpLogAppender) {
+        catLogService.appender(catHttpLogAppender);
     });

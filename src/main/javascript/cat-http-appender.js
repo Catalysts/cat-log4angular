@@ -7,8 +7,8 @@
  * No uploads happen if no suitable logs have been produced.
  */
 angular
-    .module('ngLogCustom')
-    .provider('$httpLogAppender', function () {
+    .module('cat.service.log')
+    .provider('catHttpLogAppender', function () {
         var intervalInSeconds = 10;
         var postUrl;
         var minLevel = 'info';
@@ -25,9 +25,9 @@ angular
             return this;
         };
         this.$get = ['$http', '$interval', '$log', 'LOG_LEVEL_ORDER', function ($http, $interval, $log, LOG_LEVEL_ORDER) {
-            var logger = $log.Logger('httpLogAppender');
+            var logger = $log.Logger('catHttpLogAppender');
             if (typeof postUrl === 'undefined') {
-                throw new Error('$httpLogAppenderProvider requires definition of postUrl');
+                throw new Error('catHttpLogAppenderProvider requires definition of postUrl');
             }
             var logs = [];
 
