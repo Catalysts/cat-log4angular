@@ -4,11 +4,10 @@ angular
     .module('ngLogApp', [
         'cat.service.log'
     ])
-    .config(function (catLogServiceProvider, CONSOLE_APPENDER, ROOT_LOGGER_NAME) {
+    .config(function (catLogServiceProvider, CONSOLE_APPENDER, ROOT_LOGGER_NAME, HTTP_LOGGER_NAME) {
         catLogServiceProvider
             .configure(ROOT_LOGGER_NAME, 'warn')
-            .configure('PAC', 'info')
-            .configure('httpLogAppender', 'debug')
+            .configure(HTTP_LOGGER_NAME, 'debug')
             .appender(CONSOLE_APPENDER);
     })
     .config(function (catHttpLogAppenderProvider) {

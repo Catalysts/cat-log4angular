@@ -8,6 +8,7 @@
  */
 angular
     .module('cat.service.log')
+    .constant('HTTP_LOGGER_NAME', 'catHttpLogAppender')
     .provider('catHttpLogAppender', function () {
         var intervalInSeconds = 10;
         var postUrl;
@@ -24,8 +25,8 @@ angular
             minLevel = _minLevel;
             return this;
         };
-        this.$get = ['$http', '$interval', '$log', 'LOG_LEVEL_ORDER', function ($http, $interval, $log, LOG_LEVEL_ORDER) {
-            var logger = $log.Logger('catHttpLogAppender');
+        this.$get = ['$http', '$interval', '$log', 'HTTP_LOGGER_NAME', 'LOG_LEVEL_ORDER', function ($http, $interval, $log, HTTP_LOGGER_NAME, LOG_LEVEL_ORDER) {
+            var logger = $log.Logger(HTTP_LOGGER_NAME);
             if (typeof postUrl === 'undefined') {
                 throw new Error('catHttpLogAppenderProvider requires definition of postUrl');
             }
