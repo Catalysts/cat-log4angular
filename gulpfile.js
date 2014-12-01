@@ -62,7 +62,9 @@ function _testTask(watch) {
 function _build(destination) {
     return function () {
         return gulp
-            .src('src/main/javascript/**/*.js')
+            .src([
+                'src/main/javascript/cat-log-service.js',
+                'src/main/javascript/cat-http-appender.js'])
             .pipe(gulp.jshint())
             .pipe(gulp.jshint.reporter('jshint-stylish'))
             .pipe(gulp.sourcemaps.init())
