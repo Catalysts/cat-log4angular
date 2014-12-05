@@ -13,6 +13,5 @@ cd ..
 git add .
 git commit -m %*
 git tag %*
-cd ..
 git push
 git push origin tags/%*
