@@ -2,8 +2,7 @@
     "name": "cat-log4angular",
     "version": "14.12.1",
     "dependencies": {
-        "angular": "1.2.26",
-        "lodash": "2.4.1"
+        "angular": "1.2.26"
     },
     "devDependencies": {
         "angular-mocks": "1.2.26",

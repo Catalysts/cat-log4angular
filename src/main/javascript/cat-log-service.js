@@ -85,11 +85,11 @@ angular
                     }
                 };
                 var loggify = function (logger) {
-                    _.each(['debug', 'info', 'warn', 'error'], function (level) {
+                    angular.forEach(['debug', 'info', 'warn', 'error'], function (level) {
                         var methodLvlNumber = LOG_LEVEL_ORDER[level];
                         var log = function (message) {
                             if (LOG_LEVEL_ORDER[logger.resolveLevel()] <= methodLvlNumber) {
-                                _.each(appenderList, function (appender) {
+                                angular.forEach(appenderList, function (appender) {
                                     var memorySizes;
                                     if (dumpMemorySizes && window.performance && window.performance.memory) {
                                         memorySizes = window.performance.memory;
@@ -143,7 +143,7 @@ angular
             // instantiate  root logger
             var rootLogger = catLogService.Logger();
 
-            _.each(['debug', 'info', 'warn', 'error'], function (level) {
+            angular.forEach(['debug', 'info', 'warn', 'error'], function (level) {
                 $delegate[level] = rootLogger[level];
             });
             $delegate.Logger = catLogService.Logger;

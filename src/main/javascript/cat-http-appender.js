@@ -44,8 +44,11 @@ angular
                 },
                 flush: function () {
                     var minLevelOrder = LOG_LEVEL_ORDER[minLevel];
-                    var logsToSend = _.filter(_.clone(logs), function (logEntry) {
-                        return LOG_LEVEL_ORDER[logEntry.level] >= minLevelOrder;
+                    var logsToSend = [];
+                    angular.forEach(logs, function (logEntry) {
+                        if (LOG_LEVEL_ORDER[logEntry.level] >= minLevelOrder) {
+                            logsToSend.push(logEntry);
+                        }
                     });
                     logs.length = 0;
                     if (logsToSend.length > 0) {
