@@ -29,7 +29,7 @@ var bowerJsonTemplate = [
     '  ],',
     '  "license": "The MIT License (MIT)",',
     '  "dependencies": {',
-    '    "angular": "<%= dependencies.angular %>"',
+    '    "angular": "^<%= dependencies.angular %>"',
     '  },',
     '  "main": [',
     '    "cat-log4angular.min.js"',
