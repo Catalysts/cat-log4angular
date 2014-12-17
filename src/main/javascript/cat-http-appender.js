@@ -37,7 +37,7 @@ angular
                     logs.push({
                         level: level,
                         group: group,
-                        message: message,
+                        message: typeof message === 'string' ? message : message.toString(),
                         memorySizes: memorySizes,
                         timestamp: new Date().getTime()
                     });
