@@ -1,0 +1,36 @@
+<div class="header">
+    <h3 class="text-muted">cat-log4angular</h3>
+</div>
+
+<div class="jumbotron">
+    <h1>Customizable Logger</h1>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-4">Root logger level:</label>
+            <div class="col-md-8">
+                <select ng-model="loggerLevels.root" ng-options="l for l in levels" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4">Sub logger level:</label>
+            <div class="col-md-8">
+                <select ng-model="loggerLevels.sub" ng-options="l for l in levels" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" ng-click="debug('Breakpoint')">Debug</button>
+            <button class="btn btn-info" ng-click="info('Info')">Info</button>
+            <button class="btn btn-warning" ng-click="warn('Attention')">Warn</button>
+            <button class="btn btn-danger" ng-click="error('Exception')">Error</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="clearLogs()">Clear logs</button>
+        </div>
+    </form>
+
+</div>
+<ul>
+    <li ng-repeat="log in logs">{{log.timestamp | date:'mediumTime'}}: {{log.level}} - [{{log.group}}] {{log.message}}
+    </li>
+</ul>
