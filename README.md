@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Catalysts/cat-log4angular.svg)](https://travis-ci.org/Catalysts/cat-log4angular)
+
 # cat-log4angular
 A simple configurable logger enhancing angulars $log service.
 It provides support for multiple log levels (```'debug', 'info', 'warn', 'error'```) as well as named (hierarchical) loggers (eg. ```cc.catalysts.LogService```).
