@@ -22,7 +22,12 @@ angular
     .constant('CONSOLE_APPENDER', {
         report: function (level, group, message) {
             if (typeof console === 'object') {
-                console[level](group + ' ' + message);
+                if (message instanceof Error) {
+                    console[level](group + ' ' + message.message);
+                    console.log(message.stack);
+                } else {
+                    console[level](group + ' ' + message);
+                }
             }
         }
     })
