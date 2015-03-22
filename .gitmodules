@@ -1,0 +1,4 @@
+[submodule "cat-log4angular"]
+	path = dist
+	url = git@github.com:Catalysts/cat-log4angular-bower.git
+	branch = master
