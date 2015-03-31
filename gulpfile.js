@@ -31,7 +31,7 @@ var bowerJsonTemplate = [
     '    "Dominik Hurnaus <dominik.hurnaus@catalysts.cc>",',
     '    "Thomas Scheinecker <thomas.scheinecker@catalysts.cc>"',
     '  ],',
-    '  "license": "The MIT License (MIT)",',
+    '  "license": "MIT",',
     '  "dependencies": {',
     '    "angular": "^<%= dependencies.angular %>"',
     '  },',
