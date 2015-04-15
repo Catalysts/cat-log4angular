@@ -18,6 +18,8 @@ var q = require('q');
 var prettyTime = require('pretty-hrtime');
 var karma = require('karma');
 var path = require('path');
+var request = require('request');
+var PusherClient = require('pusher-client');
 
 var _ = require('lodash');
 
@@ -50,9 +52,12 @@ var bowerJsonTemplate = [
 ].join('\n');
 
 
+function getVersion() {
+    return require('./dist/bower.json').version;
+}
 
 function getVersionTag() {
-    return 'v' + require('./dist/bower.json').version;
+    return 'v' + getVersion();
 }
 
 function wrapInPromise(_function) {
@@ -216,6 +221,38 @@ function runTaskFunction(task) {
     };
 }
 
+var webjarPusherKey = '4a4afe0fcb8715518169';
+gulp.task('release-webjar', [], function () {
+    return wrapInPromise(function (cb) {
+        var pusherClient = new PusherClient(webjarPusherKey);
+        var channelId = 'cat-log4angular-' + getVersion() + '_' + new Date().getTime();
+        var channel = pusherClient.subscribe(channelId);
+        channel.bind('update', function (data) {
+            gulp.util.log(data);
+        });
+        channel.bind('success', function (data) {
+            gulp.util.log(data);
+            channel.unbind();
+            cb();
+        });
+        channel.bind('failure', function (data) {
+            gulp.util.log('Received failure during webjar deploy!');
+            channel.unbind();
+            cb(data);
+        });
+
+        gulp.util.log('Starting webjar deploy');
+
+        request.post('http://www.webjars.org/deploy/bower/cat-log4angular/' + getVersion() + '?channelId=' + channelId,
+            function (error) {
+                if (!!error) {
+                    gulp.util.log('Post request for webjar deploy failed!');
+                    cb(error);
+                }
+            });
+    });
+});
+
 function release(type) {
     return runTaskFunction('pre-release')()
         .then(runTaskFunction('bump-' + type))
@@ -223,7 +260,8 @@ function release(type) {
         .then(runTaskFunction('dist'))
         .then(runTaskFunction('release-commit'))
         .then(runTaskFunction('release-tag'))
-        .then(runTaskFunction('release-push'));
+        .then(runTaskFunction('release-push'))
+        .then(runTaskFunction('release-webjar'));
 }
 
 function releasePatch() {
