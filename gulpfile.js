@@ -89,18 +89,23 @@ function _testTask(watch) {
 
 function _build(destination) {
     return function () {
+        var jsFilter = gulp.filter('**/*.js');
         return gulp
             .src([
+                'src/main/util/js-header.js.tpl',
                 'src/main/javascript/cat-log-service.js',
-                'src/main/javascript/cat-http-appender.js'])
+                'src/main/javascript/cat-http-appender.js',
+                'src/main/util/js-footer.js.tpl'])
+            .pipe(jsFilter) // filter out *.js.tpl files
             .pipe(gulp.jshint())
             .pipe(gulp.jshint.reporter('jshint-stylish'))
+            .pipe(jsFilter.restore()) // restore all files
             .pipe(gulp.sourcemaps.init())
             .pipe(gulp.concat('cat-log4angular.js'))
             .pipe(gulp.sourcemaps.write('.', {sourceRoot: 'src'}))
             .pipe(gulp.dest(destination))
             .pipe(gulp.filter(['**/*.js']))
-            .pipe(gulp.uglify({mangle: false}))
+            .pipe(gulp.uglify({preserveComments: 'some', mangle: false}))
             .pipe(gulp.rename('cat-log4angular.min.js'))
             .pipe(gulp.sourcemaps.write('.', {sourceRoot: '../src'}))
             .pipe(gulp.dest(destination));

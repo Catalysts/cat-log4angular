@@ -157,5 +157,4 @@ angular
 
             return $delegate;
         }]);
-    })
-;
+    });

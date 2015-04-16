@@ -67,5 +67,4 @@ angular
             $interval(appender.flush, intervalInSeconds * 1000, 0, false);
             return appender;
         }];
-    })
-;
+    });
