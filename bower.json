@@ -1,6 +1,6 @@
 {
     "name": "cat-log4angular",
-    "version": "1.0.5",
+    "version": "1.1.0",
     "dependencies": {
         "angular": "1.2.26"
     },
