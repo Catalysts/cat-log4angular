@@ -10,7 +10,6 @@ module.exports = function (config) {
         files: [
             'bower_components/angular/angular.js',
             'bower_components/angular-mocks/angular-mocks.js',
-            'bower_components/lodash/dist/lodash.compat.js',
             'src/main/javascript/cat-log-service.js',
             'src/main/javascript/cat-http-appender.js',
             'src/test/javascript/spec/**/*.js'

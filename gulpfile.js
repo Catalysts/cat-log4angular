@@ -75,21 +75,23 @@ function wrapInPromise(_function) {
 }
 
 function _bowerJson() {
-    return gulp.file('bower.json', _.template(bowerJsonTemplate, require('./bower.json')), {src: true}).pipe(gulp.dest('dist'));
+    return gulp.file('bower.json', _.template(bowerJsonTemplate)(require('./bower.json')), {src: true}).pipe(gulp.dest('dist'));
 }
 
 function _testTask(watch) {
     return function (cb) {
-        karma.server.start(_.assign({}, {configFile: path.resolve('./karma.conf.js')}, {
+        var karmaConfig = _.assign({}, {
+            configFile: path.resolve('./karma.conf.js'),
             singleRun: !watch,
             autoWatch: watch
-        }), cb);
+        });
+        new karma.Server(karmaConfig, cb).start();
     };
 }
 
 function _build(destination) {
     return function () {
-        var jsFilter = gulp.filter('**/*.js');
+        var jsFilter = gulp.filter('**/*.js', {restore: true});
         return gulp
             .src([
                 'src/main/util/js-header.js.tpl',
@@ -99,7 +101,7 @@ function _build(destination) {
             .pipe(jsFilter) // filter out *.js.tpl files
             .pipe(gulp.jshint())
             .pipe(gulp.jshint.reporter('jshint-stylish'))
-            .pipe(jsFilter.restore()) // restore all files
+            .pipe(jsFilter.restore) // restore all files
             .pipe(gulp.sourcemaps.init())
             .pipe(gulp.concat('cat-log4angular.js'))
             .pipe(gulp.sourcemaps.write('.', {sourceRoot: 'src'}))
@@ -117,7 +119,6 @@ function _jshintTest() {
         .pipe(gulp.jshint())
         .pipe(gulp.jshint.reporter('jshint-stylish'));
 }
-
 
 
 function bumpVersion(type) {
