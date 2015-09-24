@@ -60,20 +60,6 @@ function getVersionTag() {
     return 'v' + getVersion();
 }
 
-function wrapInPromise(_function) {
-    var deferred = q.defer();
-
-    _function(function (err) {
-        if (!err) {
-            deferred.resolve();
-        } else {
-            deferred.reject(err);
-        }
-    });
-
-    return deferred.primise;
-}
-
 function _bowerJson() {
     return gulp.file('bower.json', _.template(bowerJsonTemplate)(require('./bower.json')), {src: true}).pipe(gulp.dest('dist'));
 }
@@ -139,22 +125,18 @@ gulp.task('bump-major', function () {
     return bumpVersion('major');
 });
 
-function preRelease() {
-    return wrapInPromise(function (cb) {
-        gulp.git.tag('pre-release', 'pre-release', {args: '-f'}, cb);
-    });
+function preRelease(cb) {
+    gulp.git.tag('pre-release', 'pre-release', {args: '-f'}, cb);
 }
 
-function releaseTag() {
-    return wrapInPromise(function (cb) {
-        var version = getVersionTag();
-        gulp.git.tag(version, version, function (err) {
-            if (!!err) {
-                cb(err);
-            } else {
-                gulp.git.tag(version, version, {cwd: 'dist'}, cb);
-            }
-        });
+function releaseTag(cb) {
+    var version = getVersionTag();
+    gulp.git.tag(version, version, function (err) {
+        if (!!err) {
+            cb(err);
+        } else {
+            gulp.git.tag(version, version, {cwd: 'dist'}, cb);
+        }
     });
 }
 
@@ -168,27 +150,23 @@ gulp.task('release-commit', ['release-commit-dist'], function () {
         .pipe(gulp.git.commit(getVersionTag()));
 });
 
-gulp.task('release-push-dist', function () {
-    return wrapInPromise(function (cb) {
-        gulp.git.push('origin', 'master', {cwd: 'dist'}, function (err) {
-            if (!!err) {
-                cb(err);
-            } else {
-                gulp.git.push('origin', getVersionTag(), {cwd: 'dist'}, cb);
-            }
-        });
+gulp.task('release-push-dist', function (cb) {
+    gulp.git.push('origin', 'master', {cwd: 'dist'}, function (err) {
+        if (!!err) {
+            cb(err);
+        } else {
+            gulp.git.push('origin', getVersionTag(), {cwd: 'dist'}, cb);
+        }
     });
 });
 
-gulp.task('release-push', ['release-push-dist'], function () {
-    return wrapInPromise(function (cb) {
-        gulp.git.push('origin', 'master', function (err) {
-            if (!!err) {
-                cb(err);
-            } else {
-                gulp.git.push('origin', getVersionTag(), cb);
-            }
-        });
+gulp.task('release-push', ['release-push-dist'], function (cb) {
+    gulp.git.push('origin', 'master', function (err) {
+        if (!!err) {
+            cb(err);
+        } else {
+            gulp.git.push('origin', getVersionTag(), cb);
+        }
     });
 });
 
