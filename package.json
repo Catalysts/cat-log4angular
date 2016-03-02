@@ -6,6 +6,10 @@
     "type": "git",
     "url": "git://github.com/Catalysts/cat-log4angular.git"
   },
+  "author": "Dominik Hurnaus <dominik.hurnaus@catalysts.cc>",
+  "contributors": [
+    "Thomas Scheinecker <thomas.scheinecker@catalysts.cc>"
+  ],
   "scripts": {
     "test": "./node_modules/.bin/gulp test",
     "release-patch": "./node_modules/.bin/gulp release-patch",
@@ -38,6 +42,9 @@
     "pusher-client": "=0.2.3",
     "q": "=1.4.1",
     "request": "=2.63.0"
+  },
+  "peerDependencies": {
+    "angular": ">=1.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
