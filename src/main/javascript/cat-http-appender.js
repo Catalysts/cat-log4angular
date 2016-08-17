@@ -37,7 +37,7 @@ function CatHttpLogAppender($http,
         });
         logs.length = 0;
         if (logsToSend.length > 0) {
-            return $http.post(config.postUrl, logsToSend)
+            return $http.post(config.postUrl, logsToSend, config)
                 .success(function () {
                     logger.debug('Successfully uploaded logs.');
                 })
@@ -56,6 +56,7 @@ function CatHttpLogAppenderProvider() {
     var intervalInSeconds = 10;
     var postUrl;
     var minLevel = 'info';
+    var config = {};
     this.interval = function (_intervalInSeconds) {
         intervalInSeconds = _intervalInSeconds;
         return this;
@@ -68,14 +69,16 @@ function CatHttpLogAppenderProvider() {
         minLevel = _minLevel;
         return this;
     };
+    this.setConfig = function(key, value) {
+        config[key] = value;
+        return this;
+    };
 
     this.$get = ['$http', '$interval', '$log', 'HTTP_LOGGER_NAME', 'LOG_LEVEL_ORDER',
         function ($http, $interval, $log, HTTP_LOGGER_NAME, LOG_LEVEL_ORDER) {
-            var config = {
-                intervalInSeconds: intervalInSeconds,
-                postUrl: postUrl,
-                minLevel: minLevel
-            };
+            config.intervalInSeconds = intervalInSeconds;
+            config.postUrl = postUrl;
+            config.minLevel = minLevel;
             return new CatHttpLogAppender($http, $interval, $log, config, HTTP_LOGGER_NAME, LOG_LEVEL_ORDER);
         }];
 }
