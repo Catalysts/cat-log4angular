@@ -17,6 +17,7 @@
     "release-major": "./node_modules/.bin/gulp release-major"
   },
   "devDependencies": {
+    "angular": ">=1.2.0",
     "bower": "=1.5.3",
     "gulp": "=3.9.0",
     "gulp-bower": "=0.0.10",
